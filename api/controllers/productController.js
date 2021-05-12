@@ -1,8 +1,6 @@
 const Product = require('../models/porductModel');
 const userJwt = require('../middleware/userJwt')
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET || 'password';
 
 
 class ProductController {
@@ -11,32 +9,52 @@ class ProductController {
 
     async create(product) {
 
-        // const payload = {
-        //     userId: auser.id,
-        //     tokenCreationDate: new Date
-        // }
-
-        // const token = jwt.sign(payload, secret);
         const userCreateProduct = Product.create(product);
         return {userJwt, userCreateProduct}
 
     };   
 
-    // User can Update Product
+    // User Can Get All Product
+
+    async productAll(allProduct) {
+        
+        const userGetAllProducts = Product.find(allProduct);
+        return {userJwt, userGetAllProducts}
+    };
+
+    // User Can Get Product By Id
+
+    async searchtById(id) {
+
+        const userGetProductById = Product.findById(id);
+        return { userJwt, userGetProductById}
+    }
+
+    // User Can Update Product
 
     async update(product) {
 
-        const payload = {
-            userId: auser.id,
-            tokenCreationDate: new Date
-        }
-
-        const token = jwt.sign(payload, secret);
         const userUpdateProduct = Product.create(product);
-        return
-    }
+        return{userJwt, userUpdateProduct}
+    };
 
+    // User Can Delete Product By Id
 
+    async deleteById(id) {
 
+        const userCanDeleteById = Product.findByIdAndDelete(id);
+        return {userJwt, userCanDeleteById}
+    };
 
-}    
+    // User Can Delete All Product 
+
+    async deleteAll(productAll) {
+
+        const userCanDeleteAllProduct = Product.deleteMany(productAll);
+        return {userJwt, userCanDeleteAllProduct}
+    };
+
+};
+
+const ProductController = new ProductController;
+module.exports = productController;
