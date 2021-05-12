@@ -63,21 +63,7 @@ class UserController {
         return {token, userDelete}
     };
 
-    // Delete All
-
-    async deleteAll(deleteUser) {
-
-        const payload = {
-            userId: user.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
-        const userDeleteAll = User.deleteMany(deleteUser)
-
-        return {token, userDeleteAll}
-    };
-
+   
     // Admin Can Search User By Id
 
     async searchById(id) {
