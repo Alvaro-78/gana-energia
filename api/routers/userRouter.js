@@ -4,11 +4,11 @@ const User = require('../models/userModel');
 
 // Create User
 
-const createHandler = async(req, res) => {
+const createHandler = async (req, res) => {
 
     try {
-        const newUser = new User(req.body)
-        const result = await userController.create(newUser)
+        const newUser = new User(req.body);
+        const result = await userController.create(newUser);
         res.json({result, date: newDate});
     } catch (error) {
         console.log(error)
@@ -17,7 +17,7 @@ const createHandler = async(req, res) => {
 
 // Login User
 
-const loginHandler = async(req, res) => {
+const loginHandler = async (req, res) => {
 
     try {
         const {email, password} = req.body;
@@ -64,42 +64,17 @@ const deleteHandler = async (req, res) => {
 const deleteAllUserHandler = async (req, res) => {
 
     try {
-        const result = await userController.deleteAll();
+        const result = await userController.deleteMany();
         res.json({result, date: new Date});
     } catch (error) {
         console.log(error)
     }
 };
 
-// Search All users 
 
-const userAllHandler = async (req, res) => {
-
-    try {
-        const result = await userController.userAll();
-        res.json({result, date: new Date});
-    } catch (error) {
-        console.log(error)
-    }
-};
-
-// Search User By Id
-
-const searchByIdHandler = async (req, res) => {
-
-    try {
-        const id = req.params.id;
-        const result = await userController.searchById(id);
-        res.json({result, date: new Date});
-    } catch (error) {
-        console.log(error)
-    }
-};
 
 router.post('/', createHandler);
 router.post('/login', loginHandler);
-router.get('/', userAllHandler);
-router.get('/:id', searchByIdHandler);
 router.put('/:id', updateHandler);
 router.delete('/:id', deleteHandler);
 router.delete('/', deleteAllUserHandler);
