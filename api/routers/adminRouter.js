@@ -99,8 +99,8 @@ const adminIndexAllUserHandler = async (req, res) => {
 
 router.post('/', createHandler);
 router.post('/login', loginHandler);
-router.get('/:id', adminSearchByIdHandler);
-router.get('/', adminIndexAllUserHandler);
+router.get('/user/:id', adminSearchByIdHandler);
+router.get('/user', adminIndexAllUserHandler);
 router.put('/:id', updateHandler);
 router.delete('/', deleteHandler);
 router.delete('/:id', deleteAllHandler);
