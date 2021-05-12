@@ -6,7 +6,7 @@ const secret = process.env.JWT_SECRET || 'admin';
 
 class AdminController {
     
-    // Create Admin
+    // Create Admin And Hash Password
 
     async create(admin) {
 

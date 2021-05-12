@@ -1,8 +1,8 @@
 const User = require('../models/userModel');
 const userJwt = require('../middleware/userJwt')
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET || 'user';
+
+
 
 class UserController {
 
@@ -81,7 +81,7 @@ class UserController {
 
       // Admin Get All Users
 
-      async userAll(allUser) {
+      async userMany(allUser) {
 
         const payload = {
             adminId: admin.id,

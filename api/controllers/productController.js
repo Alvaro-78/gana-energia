@@ -1,6 +1,5 @@
-const Product = require('../models/porductModel');
+const Product = require('../models/productModel');
 const userJwt = require('../middleware/userJwt')
-const jwt = require('jsonwebtoken');
 
 
 class ProductController {
@@ -16,7 +15,7 @@ class ProductController {
 
     // User Can Get All Product
 
-    async productAll(allProduct) {
+    async productMany(allProduct) {
         
         const userGetAllProducts = Product.find(allProduct);
         return {userJwt, userGetAllProducts}
@@ -24,7 +23,7 @@ class ProductController {
 
     // User Can Get Product By Id
 
-    async searchtById(id) {
+    async searchById(id) {
 
         const userGetProductById = Product.findById(id);
         return { userJwt, userGetProductById}
@@ -48,7 +47,7 @@ class ProductController {
 
     // User Can Delete All Product 
 
-    async deleteAll(productAll) {
+    async deleteMany(productAll) {
 
         const userCanDeleteAllProduct = Product.deleteMany(productAll);
         return {userJwt, userCanDeleteAllProduct}
