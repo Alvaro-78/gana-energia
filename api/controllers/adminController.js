@@ -1,8 +1,7 @@
 const Admin = require('../models/userModel');
-const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET || 'password';
+const secret = process.env.JWT_SECRET || 'admin';
 
 
 class AdminController {
@@ -79,19 +78,6 @@ class AdminController {
         return {token,adminDeleteAll}
     };
     
-    // Admin Get All Users
-
-    async userAll(allUser) {
-
-        const payload = {
-            adminId: admin.id,
-            tokenCreationDate: new Date
-        }
-
-        const token = jwt.sign(payload, secret);
-        const adminGetAllUser = User.find(allUser)
-        return {token, adminGetAllUser}
-    };
 
 };
 

@@ -25,4 +25,4 @@ const toJSONConfig = {
 
 userSchema.set(toJSONConfig, toJSONConfig);
 
-module.exports = mongoose.model('User', userName);
+module.exports = mongoose.model('User', userSchema);

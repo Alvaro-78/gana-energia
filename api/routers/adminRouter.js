@@ -74,7 +74,7 @@ const deleteAllHandler = async (req,res) => {
 
 // Admin can Search User by Id
 
-const adminSearchByHandler = async (req, res) => {
+const adminSearchByIdHandler = async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -87,7 +87,7 @@ const adminSearchByHandler = async (req, res) => {
 
 // Admin can search All Users
 
-const AdminIndexAllUserHandler = async (req, res) => {
+const adminIndexAllUserHandler = async (req, res) => {
 
     try {
         const result = await userController.userAll();
@@ -99,8 +99,8 @@ const AdminIndexAllUserHandler = async (req, res) => {
 
 router.post('/', createHandler);
 router.post('/login', loginHandler);
-router.get('/:id', adminSearchByHandler);
-router.get('/', AdminIndexAllUserHandler);
+router.get('/:id', adminSearchByIdHandler);
+router.get('/', adminIndexAllUserHandler);
 router.put('/:id', updateHandler);
 router.delete('/', deleteHandler);
 router.delete('/:id', deleteAllHandler);

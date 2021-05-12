@@ -100,7 +100,7 @@ router.post('/', createHandler);
 router.post('/login', loginHandler);
 router.get('/', userAllHandler);
 router.get('/:id', searchByIdHandler);
-router.update('/:id', updateHandler);
+router.put('/:id', updateHandler);
 router.delete('/:id', deleteHandler);
 router.delete('/', deleteAllUserHandler);
 

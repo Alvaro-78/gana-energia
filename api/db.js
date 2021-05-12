@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const url = process.env.MONGO_SERVER || 'mongodb://localhost:27017/wmo'
+const url = process.env.MONGO_SERVER || 'mongodb://localhost:27017/gana-energia'
 const db = mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true

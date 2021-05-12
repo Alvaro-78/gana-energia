@@ -1,7 +1,8 @@
 const User = require('../models/userModel');
+const userJwt = require('../middleware/userJwt')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET || 'password';
+const secret = process.env.JWT_SECRET || 'user';
 
 class UserController {
 
@@ -29,13 +30,7 @@ class UserController {
             throw new Error('Wrong password')
         };
         
-        const payload = {
-            userId: user.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
-        return {token, user}
+        return {userJwt, user}
 
     };
 
@@ -83,24 +78,12 @@ class UserController {
         return {token, userDeleteAll}
     };
 
-    // Get All Users
-
-    async userAll(allUser) {
-
-        const payload = {
-            userId: user.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
-        const getAllUser = User.find(allUser)
-        return {token, getAllUser}
-    };
+    // Admin Can Search User By Id
 
     async searchById(id) {
 
         const payload = {
-            userId: user.id,
+            adminId: admin.id,
             tokenCreationDate: new Date,
         }
 
@@ -109,6 +92,20 @@ class UserController {
         return {token, getUserById}
     };
 
+
+      // Admin Get All Users
+
+      async userAll(allUser) {
+
+        const payload = {
+            adminId: admin.id,
+            tokenCreationDate: new Date
+        }
+
+        const token = jwt.sign(payload, secret);
+        const adminGetAllUser = User.find(allUser)
+        return {token, adminGetAllUser}
+    };
 };
 
 const userController = new UserController;

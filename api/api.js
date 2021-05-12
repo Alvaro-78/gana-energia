@@ -14,4 +14,4 @@ db.then(()=>{
         console.log('I am ready!!');
     })
 
-}).catch(console.log);
+}).catch(console.log, "AQUIIIII");
