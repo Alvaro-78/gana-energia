@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET || 'password'
+const secret = process.env.JWT_SECRET || 'password';
 
 class UserController {
 
@@ -41,7 +41,7 @@ class UserController {
     // Update
 
     async update(id,user) {
-        return User-findByIdAndUpdate(id,user)
+        return User.findByIdAndUpdate(id,user)
     };
 
     // Delete one User
@@ -69,4 +69,4 @@ class UserController {
 };
 
 const userController = new UserController;
-module.exports = userController
+module.exports = userController;
