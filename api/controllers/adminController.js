@@ -54,12 +54,6 @@ class AdminController {
         return Admin.find(allAdmin)
     };
     
-    // Admin can Update Users By Id
-
-    async update(id, user) {
-        return User.findByIdAndUpdate(id, user)
-    };
-
     // Admin Get All Users
 
     async userAll(allUser) {

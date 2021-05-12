@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { searchById } = require('../controllers/userController');
 const userController = require('../controllers/userController');
 const User = require('../models/userModel');
 
@@ -91,6 +90,7 @@ const searchByIdHandler = async (req, res) => {
     try {
         const id = req.params.id;
         const result = await userController.searchById(id);
+        res.json({result, date: new Date});
     } catch (error) {
         console.log(error)
     }
