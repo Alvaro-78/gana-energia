@@ -39,25 +39,58 @@ class AdminController {
     // Update Admin
 
     async udpdate(id, admin) {
-        return Admin.findByIdAndUpdate(id, admin)
+
+        const payload = {
+            adminId: admin.id,
+            tokenCreationDate: new Date
+        }
+
+        const token = jwt.sign(payload, secret);
+        const adminUpdate = Admin.findByIdAndUpdate(id, admin)
+        return {token, adminUpdate}
     };
 
     // Delete Admin
 
     async delete(id) {
-        return Admin.findByIdAndDelete(id)
+
+        const payload = {
+            adminId: admin.id,
+            tokenCreationDate: new Date
+        }
+
+        const token = jwt.sign(payload, secret);
+        const adminDelete = Admin.findByIdAndDelete(id)
+
+        return {token, adminDelete}
     };
 
     // Delete All Admin
 
     async deleteAll(allAdmin) {
-        return Admin.find(allAdmin)
+
+        const payload = {
+            adminId: admin.id,
+            tokenCreationDate: new Date
+        }
+
+        const token = jwt.sign(payload, secret);
+        const adminDeleteAll = Admin.find(allAdmin)
+        return {token,adminDeleteAll}
     };
     
     // Admin Get All Users
 
     async userAll(allUser) {
-        return User.find(allUser)
+
+        const payload = {
+            adminId: admin.id,
+            tokenCreationDate: new Date
+        }
+
+        const token = jwt.sign(payload, secret);
+        const adminGetAllUser = User.find(allUser)
+        return {token, adminGetAllUser}
     };
 
 };

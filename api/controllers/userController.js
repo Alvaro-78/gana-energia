@@ -13,6 +13,7 @@ class UserController {
             return ''
         }
         user.password = await bcrypt.hash(user.password,5)
+
         return User.create(user)
     };
 
@@ -33,7 +34,7 @@ class UserController {
             tokenCreationDate: new Date,
         }
 
-        const token = jwt.sign(paylord, secret);
+        const token = jwt.sign(payload, secret);
         return {token, user}
 
     };
@@ -41,29 +42,71 @@ class UserController {
     // Update
 
     async update(id,user) {
-        return User.findByIdAndUpdate(id,user)
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date,
+        }
+
+        const token = jwt.sign(payload, secret);
+        const userUpdate = User.findByIdAndUpdate(id,user)
+        return {token, userUpdate}
     };
 
     // Delete one User
 
     async delete(id) {
-        return User.findByIdAndDelete(id)
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date,
+        }
+
+        const token = jwt.sign(payload, secret);
+        const userDelete = User.findByIdAndDelete(id)
+
+        return {token, userDelete}
     };
 
     // Delete All
 
     async deleteAll(deleteUser) {
-        return User.deleteMany(deleteUser)
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date,
+        }
+
+        const token = jwt.sign(payload, secret);
+        const userDeleteAll = User.deleteMany(deleteUser)
+
+        return {token, userDeleteAll}
     };
 
     // Get All Users
 
     async userAll(allUser) {
-        return User.find(allUser)
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date,
+        }
+
+        const token = jwt.sign(payload, secret);
+        const getAllUser = User.find(allUser)
+        return {token, getAllUser}
     };
 
     async searchById(id) {
-        return User.findById(id)
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date,
+        }
+
+        const token = jwt.sign(payload, secret);
+        const getUserById = User.findById(id)
+        return {token, getUserById}
     };
 
 };
