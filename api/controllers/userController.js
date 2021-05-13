@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
-const userJwt = require('../middleware/userJwt')
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET || 'user';
 const bcrypt = require('bcryptjs');
-
 
 
 class UserController {
@@ -30,8 +30,15 @@ class UserController {
         if(!await bcrypt.compare(password,user.password)) {
             throw new Error('Wrong password')
         };
+
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date
+        }
+    
+        const token = jwt.sign(payload, secret);
         
-        return {userJwt, user}
+        return {token, user}
 
     };
 
@@ -39,36 +46,49 @@ class UserController {
 
     async update(id,user) {
 
-        const userUpdate = User.findByIdAndUpdate(id,user)
-        return {userJwt, userUpdate}
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date
+        }
+    
+        const token = jwt.sign(payload, secret);
+        const userUpdate = User.findByIdAndUpdate(id,user);
+            
+        return {token, userUpdate}
     };
 
     // Delete one User
 
     async delete(id) {
 
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date
+        }
+    
+        const token = jwt.sign(payload, secret);
         const userDelete = User.findByIdAndDelete(id)
 
-        return {userJwt, userDelete}
+        return {token, userDelete}
     };
 
    
-    // Admin Can Search User By Id
+    // // Admin Can Search User By Id
 
-    async searchById(id) {
+    // async searchById(id) {
 
-        const getUserById = User.findById(id)
-        return {userJwt, getUserById}
-    };
+    //     const getUserById = User.findById(id)
+    //     return {userJwt, getUserById}
+    // };
 
 
-      // Admin Get All Users
+    //   // Admin Get All Users
 
-    async userAll() {
+    // async userAll() {
 
-        const userGetAllUser = User.find()
-        return {userJwt, userGetAllUser}
-    };
+    //     const userGetAllUser = User.find()
+    //     return {userJwt, userGetAllUser}
+    // };
 };
 
 const userController = new UserController;

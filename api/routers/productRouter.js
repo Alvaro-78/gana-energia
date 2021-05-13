@@ -5,7 +5,7 @@ const Product = require('../models/productModel');
 
 // User Create Product
 
-const createHandler = async (req, res) => {
+router.post('/', async (req, res)  => {
 
     try {
         const newProduct = new Product(req.body);
@@ -14,61 +14,70 @@ const createHandler = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-};
+});
 
 // User Can Search All Product
 
-const productAllHandler = async (req, res ) => {
+router.get('/', async (req, res ) => {
 
     try {
-        const result = await ProductController.productMany();
+        const result = await ProductController.productAll();
         res.json({result, date: new Date});
     } catch (error) {
         console.log(error)
     }
-};
+});
 
 // User Can Search By Id
 
-const searchByIdHandler = async (req, res) => {
+router.get('/:id', async (req, res) => {
 
     try {
         const id = req.params.id;
-        const result = await ProductController.searchById(id);
+        const jwt = await ProductController.searchById(id);
+        const token = jwt.token;
+        const user = jwt.user;
+        res.json({token, user, date: new Date});
     } catch (error) {
         console.log(error)
     }
-};
+});
 
 // User Can Update Product
 
-const updateHandler = async(req, res) => {
-
+router.put('/:id', async(req, res) => {
+console.log("update",res)
     try {
         const updateProduct = req.body;
         const id = req.params.id;
+        const result = await ProductController.update(id, updateProduct)
         res.json({result, date: new Date});
+        console.log(res.json,"YEEEEEEEEEEEEEEEEEEEEEEEEEEE")
     } catch (error) {
         console.log(error)
     }
-};
+});
+
 
 // User Can Delete Product By Id
 
-const deleteHandler = async (req, res) => {
+router.delete('/:id',  async (req, res) => {
 
     try {
-        const id = req.params,id;
-        const result = await ProductController.delete(id);
+        const id = req.params.id;
+        const result = await ProductController.deleteById(id);
+        console.log(req);
+        console.log(ProductController.deleteById,"ieeeeeeeeeeeeeeeee")
         res.json({result, date: new Date});
+        console.log(result,"IEEEEEEEE")
     } catch (error) {
         console.log(error)
     }
-};
+});
 
 // User Can Delete All Product
 
-const deleteAllProductHandler = async (req, res) => {
+router.delete('/', async (req, res) => {
 
     try {
         const result = await ProductController.deleteMany();
@@ -76,11 +85,7 @@ const deleteAllProductHandler = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-};
+});
 
-router.post('/', createHandler);
-router.get('/', productAllHandler);
-router.get('/:id', searchByIdHandler);
-router.put('/:id', updateHandler);
-router.delete('/:id', deleteHandler);
-router.delete('/', deleteAllProductHandler);
+
+module.exports = router;
