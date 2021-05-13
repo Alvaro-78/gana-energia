@@ -1,5 +1,7 @@
 const Product = require('../models/productModel');
-const userJwt = require('../middleware/userJwt')
+const user = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET || 'user';
 
 
 class ProductController {
@@ -8,17 +10,29 @@ class ProductController {
 
     async create(product) {
 
-        const userCreateProduct = Product.create(product);
-        return {userJwt, userCreateProduct}
+        const productExist = await Product.findOne({product});
+        if(productExist) {
+            return ''
+        }
 
+        const payload = {
+            userId: user.id,
+            tokenCreationDate: new Date
+        }
+    
+        const token = jwt.sign(payload, secret);
+        const userCreateProduct = Product.create(product);
+
+        return {token, userCreateProduct}
     };   
 
     // User Can Get All Product
 
-    async productMany(allProduct) {
-        
-        const userGetAllProducts = Product.find(allProduct);
-        return {userJwt, userGetAllProducts}
+    async productAll() {
+
+        const userGetAllProducts = Product.find();
+
+        return  userGetAllProducts
     };
 
     // User Can Get Product By Id
@@ -26,15 +40,17 @@ class ProductController {
     async searchById(id) {
 
         const userGetProductById = Product.findById(id);
-        return { userJwt, userGetProductById}
-    }
+
+        return {token, userGetProductById}
+    };
 
     // User Can Update Product
 
-    async update(product) {
+    async update(product, user) {
 
-        const userUpdateProduct = Product.create(product);
-        return{userJwt, userUpdateProduct}
+        const userUpdateProduct = Product.findByIdAndUpdate(product);
+
+        return{token, userUpdateProduct}
     };
 
     // User Can Delete Product By Id
@@ -42,7 +58,8 @@ class ProductController {
     async deleteById(id) {
 
         const userCanDeleteById = Product.findByIdAndDelete(id);
-        return {userJwt, userCanDeleteById}
+
+        return {token, userCanDeleteById}
     };
 
     // User Can Delete All Product 
@@ -50,10 +67,11 @@ class ProductController {
     async deleteMany(productAll) {
 
         const userCanDeleteAllProduct = Product.deleteMany(productAll);
-        return {userJwt, userCanDeleteAllProduct}
+
+        return {token, userCanDeleteAllProduct}
     };
 
 };
 
-const ProductController = new ProductController;
+const productController = new ProductController;
 module.exports = productController;
