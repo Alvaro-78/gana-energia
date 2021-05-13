@@ -9,6 +9,7 @@ class UserController {
     // Create User and Hash password
 
     async create(user) {
+        console.log("dentro del create user")
         const userExist = await User.findOne({user});
         if(userExist) {
             return ''
@@ -34,33 +35,21 @@ class UserController {
 
     };
 
-    // Update
+    // Update User
 
     async update(id,user) {
 
-        const payload = {
-            userId: user.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
         const userUpdate = User.findByIdAndUpdate(id,user)
-        return {token, userUpdate}
+        return {userJwt, userUpdate}
     };
 
     // Delete one User
 
     async delete(id) {
 
-        const payload = {
-            userId: user.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
         const userDelete = User.findByIdAndDelete(id)
 
-        return {token, userDelete}
+        return {userJwt, userDelete}
     };
 
    
@@ -68,29 +57,17 @@ class UserController {
 
     async searchById(id) {
 
-        const payload = {
-            adminId: admin.id,
-            tokenCreationDate: new Date,
-        }
-
-        const token = jwt.sign(payload, secret);
         const getUserById = User.findById(id)
-        return {token, getUserById}
+        return {userJwt, getUserById}
     };
 
 
       // Admin Get All Users
 
-      async userMany(allUser) {
+    async userAll() {
 
-        const payload = {
-            adminId: admin.id,
-            tokenCreationDate: new Date
-        }
-
-        const token = jwt.sign(payload, secret);
-        const adminGetAllUser = User.find(allUser)
-        return {token, adminGetAllUser}
+        const userGetAllUser = User.find()
+        return {userJwt, userGetAllUser}
     };
 };
 

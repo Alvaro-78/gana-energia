@@ -9,7 +9,7 @@ const createHandler = async (req, res) => {
     try {
         const newUser = new User(req.body);
         const result = await userController.create(newUser);
-        res.json({result, date: newDate});
+        res.json({result, date: new Date});
     } catch (error) {
         console.log(error)
     }
@@ -71,10 +71,38 @@ const deleteAllUserHandler = async (req, res) => {
     }
 };
 
+// Search User by Id
+
+const adminSearchByIdHandler = async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const result = await userController.searchById(id);
+        res.json({result, date: new Date});
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+// Search All Users
+
+const adminIndexAllUserHandler = async (req, res) => {
+
+    try {
+        const result = await userController.userAll();
+        console.log(result)
+        res.json({result, date: new Date});
+    } catch (error) {
+        console.log(error)
+    }
+};
+
 
 
 router.post('/', createHandler);
 router.post('/login', loginHandler);
+router.get('/:id', adminSearchByIdHandler);
+router.get('/', adminIndexAllUserHandler);
 router.put('/:id', updateHandler);
 router.delete('/:id', deleteHandler);
 router.delete('/', deleteAllUserHandler);

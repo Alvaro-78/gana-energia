@@ -66,7 +66,7 @@ class AdminController {
 
     // Delete All Admin
 
-    async deleteAll(adminAll) {
+    async deleteAllAdmin(adminAll) {
 
         const payload = {
             adminId: admin.id,
@@ -74,7 +74,7 @@ class AdminController {
         }
 
         const token = jwt.sign(payload, secret);
-        const adminDeleteAll = Admin.deleteMany(adminAll)
+        const adminDeleteAll = Admin.deleteAll(adminAll)
         return {token,adminDeleteAll}
     };
     
