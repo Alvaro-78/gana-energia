@@ -5,7 +5,7 @@ const Product = require('../models/productModel');
 
 // User Create Product
 
-router.post('/', async (req, res)  => {
+const createHandler = async (req, res)  => {
 
     try {
         const newProduct = new Product(req.body);
@@ -14,11 +14,11 @@ router.post('/', async (req, res)  => {
     } catch (error) {
         console.log(error)
     }
-});
+};
 
 // User Can Search All Product
 
-router.get('/', async (req, res ) => {
+const searchAllHandler = async (req, res ) => {
 
     try {
         const result = await ProductController.productAll();
@@ -26,11 +26,11 @@ router.get('/', async (req, res ) => {
     } catch (error) {
         console.log(error)
     }
-});
+};
 
 // User Can Search By Id
 
-router.get('/:id', async (req, res) => {
+const seacrhByIdHandler = async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -41,27 +41,26 @@ router.get('/:id', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-});
+};
 
 // User Can Update Product
 
-router.put('/:id', async(req, res) => {
+const updateHandler = async(req, res) => {
 console.log("update",res)
     try {
         const updateProduct = req.body;
         const id = req.params.id;
         const result = await ProductController.update(id, updateProduct)
         res.json({result, date: new Date});
-        console.log(res.json,"YEEEEEEEEEEEEEEEEEEEEEEEEEEE")
     } catch (error) {
         console.log(error)
     }
-});
+};
 
 
 // User Can Delete Product By Id
 
-router.delete('/:id',  async (req, res) => {
+const deleteByIdHandler = async (req, res) => {
 
     try {
         const id = req.params.id;
@@ -73,11 +72,11 @@ router.delete('/:id',  async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-});
+};
 
 // User Can Delete All Product
 
-router.delete('/', async (req, res) => {
+const deleteAllHandler = async (req, res) => {
 
     try {
         const result = await ProductController.deleteMany();
@@ -85,7 +84,14 @@ router.delete('/', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-});
+};
 
+
+router.post('/', createHandler);
+router.get('/', searchAllHandler);
+router.get('/:id', seacrhByIdHandler);
+router.put('/:id', updateHandler);
+router.delete('/:id', deleteByIdHandler);
+router.delete('/', deleteAllHandler);
 
 module.exports = router;
