@@ -3,7 +3,7 @@ const router = require('./router');
 const app = express();
 const cors = require('cors');
 const db = require('./db');
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
 app.use(cors());
@@ -14,4 +14,4 @@ db.then(()=>{
         console.log('I am ready!!');
     })
 
-}).catch(console.log, "AQUIIIII");
+}).catch(console.log);

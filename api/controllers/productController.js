@@ -15,60 +15,51 @@ class ProductController {
             return ''
         }
 
+        return  Product.create(product);
+
+    }
+       
+    // User Can Get All Product
+
+    async productAll() {
+
         const payload = {
             userId: user.id,
             tokenCreationDate: new Date
         }
     
         const token = jwt.sign(payload, secret);
-        const userCreateProduct = Product.create(product);
 
-        return {token, userCreateProduct}
-    };   
 
-    // User Can Get All Product
-
-    async productAll() {
-
-        const userGetAllProducts = Product.find();
-
-        return  userGetAllProducts
+        return  Product.find();
     };
 
     // User Can Get Product By Id
 
     async searchById(id) {
 
-        const userGetProductById = Product.findById(id);
-
-        return {token, userGetProductById}
+        return Product.findById(id);
     };
 
     // User Can Update Product
 
-    async update(product, user) {
+    async update(product, id) {
 
-        const userUpdateProduct = Product.findByIdAndUpdate(product);
-
-        return{token, userUpdateProduct}
+        return Product.findByIdAndUpdate(id, product, {new: true});
     };
 
     // User Can Delete Product By Id
 
     async deleteById(id) {
 
-        const userCanDeleteById = Product.findByIdAndDelete(id);
-
-        return {token, userCanDeleteById}
+        return Product.findByIdAndDelete(id);
     };
 
     // User Can Delete All Product 
 
     async deleteMany(productAll) {
 
-        const userCanDeleteAllProduct = Product.deleteMany(productAll);
-
-        return {token, userCanDeleteAllProduct}
+        return Product.deleteMany(productAll);
     };
 
 };
